@@ -1,0 +1,30 @@
+{
+  "name": "graphql-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api/src/server.js foo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farooq-teqniqly/graphql-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farooq-teqniqly/graphql-node/issues"
+  },
+  "homepage": "https://github.com/farooq-teqniqly/graphql-node#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.6.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1"
+  }
+}
