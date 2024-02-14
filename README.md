@@ -1,1 +1,1 @@
-# graphql-node
+# typescript-node
