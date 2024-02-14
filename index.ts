@@ -2,8 +2,12 @@ const { ApolloServer, gql } = require("apollo-server");
 
 const typeDefs = gql`
   type Query {
-    welcome: String
-    bye: String
+    welcome: String!
+    bye: String!
+    randomNumber: Int!
+    salary: Float!
+    isActive: Boolean!
+    months: [String]!
   }
 `;
 
@@ -14,6 +18,18 @@ const resolvers = {
     },
     bye: () => {
       return "Goodbye.";
+    },
+    randomNumber: () => {
+      return Math.floor(Math.random() * 10) + 1;
+    },
+    salary: () => {
+      return 100000.99;
+    },
+    isActive: () => {
+      return true;
+    },
+    months: () => {
+      return ["January", "February", "March"];
     },
   },
 };
