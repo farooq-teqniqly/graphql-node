@@ -29,3 +29,20 @@ const resolvers = {
     price: () => 19.99,
   },
 };
+
+const createApolloServer = async (
+  listenOptions: ListenOptions = { port: 4000 }
+) => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+
+  const { url } = await startStandaloneServer(server, {
+    listen: listenOptions,
+  });
+
+  return { server, url };
+};
+
+export { createApolloServer, resolvers, typeDefs };
