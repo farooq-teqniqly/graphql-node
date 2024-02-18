@@ -7,6 +7,8 @@ const queryData = {
     welcome
     randomNumber
     daysOfWeek
+    isActive
+    price
   }`,
 };
 
@@ -50,5 +52,15 @@ describe("e2e test", () => {
       "Saturday",
       "Sunday",
     ]);
+  });
+
+  it("returns isActive", async () => {
+    const data = await executeQuery();
+    expect(data.isActive).toBe(false);
+  });
+
+  it("returns the price", async () => {
+    const data = await executeQuery();
+    expect(data.price).toBe(19.99);
   });
 });
