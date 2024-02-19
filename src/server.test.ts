@@ -92,4 +92,22 @@ describe("courses api", () => {
       expect(genre.name).toBe(expectedGenre.name);
     });
   });
+
+  it("can query a single genre", async () => {
+    const query = {
+      query: `query Query {
+        genre(id: "3") {
+          id
+          name
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const genre = data.genre;
+    const expectedGenre = allGenres[2];
+
+    expect(genre.id).toBe(expectedGenre.id);
+    expect(genre.name).toBe(expectedGenre.name);
+  });
 });

@@ -22,6 +22,7 @@ const allCourses: Course[] = [
     description: "Learn the basics of TypeScript",
     price: 99.99,
     isDiscounted: false,
+    genreId: "1",
   },
   {
     id: "2",
@@ -29,6 +30,7 @@ const allCourses: Course[] = [
     description: "Learn the basics of React",
     price: 49.99,
     isDiscounted: true,
+    genreId: "1",
   },
   {
     id: "3",
@@ -36,6 +38,7 @@ const allCourses: Course[] = [
     description: "Learn the basics of GraphQL",
     price: 109.99,
     isDiscounted: false,
+    genreId: "1",
   },
 ];
 

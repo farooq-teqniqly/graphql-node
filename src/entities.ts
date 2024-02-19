@@ -9,6 +9,7 @@ type Course = {
   description: string;
   price: number;
   isDiscounted: boolean;
+  genreId: string;
 };
 
 export { Course, Genre };

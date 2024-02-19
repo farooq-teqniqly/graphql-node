@@ -3,6 +3,7 @@ const typeDefs = `
         courses: [Course!]!
         course(id: String!): Course
         genres: [Genre!]!
+        genre(id: String!): Genre
     }
 
     type Course {
@@ -16,6 +17,7 @@ const typeDefs = `
     type Genre {
         id: String!
         name: String!
+        courses: [Course!]!
     }
 `;
 
