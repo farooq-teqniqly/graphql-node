@@ -1,18 +1,20 @@
 import { ApolloServer } from "@apollo/server";
 import { createApolloServer } from "./server";
 import request from "supertest";
+import allCourses from "./data/courses";
 
 const queryData = {
   query: `query Query {
-    welcome
-    randomNumber
-    daysOfWeek
-    isActive
-    price
+    courses {
+      id
+      name
+      description
+      price
+    }
   }`,
 };
 
-describe("e2e test", () => {
+describe("courses api", () => {
   let server: ApolloServer;
   let url: string;
 
@@ -30,37 +32,17 @@ describe("e2e test", () => {
     await server?.stop();
   });
 
-  it("says welcome", async () => {
+  it("returns all courses", async () => {
     const data = await executeQuery();
-    expect(data.welcome).toBe("Welcome to Apollo Server!");
-  });
+    const courses = data.courses;
+    expect(courses.length).toBe(3);
 
-  it("generates a random number between 1 and 10", async () => {
-    const data = await executeQuery();
-    expect(data.randomNumber).toBeGreaterThanOrEqual(1);
-    expect(data.randomNumber).toBeLessThanOrEqual(10);
-  });
-
-  it("returns day of the week", async () => {
-    const data = await executeQuery();
-    expect(data.daysOfWeek).toEqual([
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ]);
-  });
-
-  it("returns isActive", async () => {
-    const data = await executeQuery();
-    expect(data.isActive).toBe(false);
-  });
-
-  it("returns the price", async () => {
-    const data = await executeQuery();
-    expect(data.price).toBe(19.99);
+    courses.forEach((course: any, index: number) => {
+      const expectedCourse = allCourses[index];
+      expect(course.id).toBe(expectedCourse.id);
+      expect(course.name).toBe(expectedCourse.name);
+      expect(course.description).toBe(expectedCourse.description);
+      expect(course.price).toBe(expectedCourse.price);
+    });
   });
 });
