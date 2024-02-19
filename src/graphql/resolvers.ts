@@ -1,14 +1,13 @@
-import allCourses from "../data/courses";
+import { allCourses, allGenres } from "../data/courses";
 
 const resolvers = {
   Query: {
-    courses: () => {
-      return allCourses;
-    },
+    courses: () => allCourses,
     course: (_: any, args: { id: any }, __: any) => {
       const id = args.id;
       return allCourses.find((course) => course.id === id);
     },
+    genres: () => allGenres,
   },
 };
 

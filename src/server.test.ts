@@ -1,7 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { createApolloServer } from "./server";
 import request from "supertest";
-import allCourses from "./data/courses";
+import { allCourses, allGenres } from "./data/courses";
 
 type Query = {
   query: string;
@@ -70,5 +70,26 @@ describe("courses api", () => {
     expect(course.name).toBe(expectedCourse.name);
     expect(course.description).toBe(expectedCourse.description);
     expect(course.price).toBe(expectedCourse.price);
+  });
+
+  it("can query by genre", async () => {
+    const query = {
+      query: `query Query {
+        genres{
+          id
+          name
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const genres = data.genres;
+    expect(genres.length).toBe(3);
+
+    genres.forEach((genre: any, index: number) => {
+      const expectedGenre = allGenres[index];
+      expect(genre.id).toBe(expectedGenre.id);
+      expect(genre.name).toBe(expectedGenre.name);
+    });
   });
 });

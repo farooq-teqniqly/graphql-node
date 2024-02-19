@@ -1,3 +1,8 @@
+type Genre = {
+  id: string;
+  name: string;
+};
+
 type Course = {
   id: string;
   name: string;
@@ -6,4 +11,4 @@ type Course = {
   isDiscounted: boolean;
 };
 
-export { Course };
+export { Course, Genre };

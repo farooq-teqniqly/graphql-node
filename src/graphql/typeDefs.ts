@@ -2,6 +2,7 @@ const typeDefs = `
     type Query {
         courses: [Course!]!
         course(id: String!): Course
+        genres: [Genre!]!
     }
 
     type Course {
@@ -10,6 +11,11 @@ const typeDefs = `
         description: String!
         price: Float!
         isDiscounted: Boolean!
+    }
+
+    type Genre {
+        id: String!
+        name: String!
     }
 `;
 

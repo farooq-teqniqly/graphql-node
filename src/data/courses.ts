@@ -1,4 +1,19 @@
-import { Course } from "../entities";
+import { Course, Genre } from "../entities";
+
+const allGenres: Genre[] = [
+  {
+    id: "1",
+    name: "Technology",
+  },
+  {
+    id: "2",
+    name: "Science",
+  },
+  {
+    id: "3",
+    name: "Art",
+  },
+];
 
 const allCourses: Course[] = [
   {
@@ -24,4 +39,4 @@ const allCourses: Course[] = [
   },
 ];
 
-export default allCourses;
+export { allCourses, allGenres };
