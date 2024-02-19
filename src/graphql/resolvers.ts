@@ -1,22 +1,24 @@
-import { allCourses, allGenres } from "../data/courses";
+import { Course, Genre } from "../entities";
 
 const resolvers = {
   Query: {
-    courses: () => allCourses,
-    course: (_: any, args: { id: any }, __: any) => {
+    courses: (_: any, __: any, context: any) => context.allCourses,
+    course: (_: any, args: { id: any }, context: any) => {
       const id = args.id;
-      return allCourses.find((course) => course.id === id);
+      return context.allCourses.find((course: Course) => course.id === id);
     },
-    genres: () => allGenres,
-    genre: (_: any, args: { id: any }, __: any) => {
+    genres: (_: any, __: any, context: any) => context.allGenres,
+    genre: (_: any, args: { id: any }, context: any) => {
       const id = args.id;
-      return allGenres.find((genre) => genre.id === id);
+      return context.allGenres.find((genre: Genre) => genre.id === id);
     },
   },
   Genre: {
-    courses: (parent: { id: string }, _: any, __: any) => {
+    courses: (parent: { id: string }, _: any, context: any) => {
       const genreId = parent.id;
-      return allCourses.filter((course) => course.genreId === genreId);
+      return context.allCourses.filter(
+        (course: Course) => course.genreId === genreId
+      );
     },
   },
 };
