@@ -1,13 +1,13 @@
 const typeDefs = `
     type Query {
         courses: [Course!]!
-        course(id: String!): Course
+        course(id: ID!): Course
         genres: [Genre!]!
         genre(id: String!): Genre
     }
 
     type Course {
-        id: String!
+        id: ID!
         name: String!
         description: String!
         price: Float!
@@ -15,7 +15,7 @@ const typeDefs = `
     }
 
     type Genre {
-        id: String!
+        id: ID!
         name: String!
         courses: [Course!]!
     }
