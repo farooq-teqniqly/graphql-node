@@ -110,4 +110,41 @@ describe("courses api", () => {
     expect(genre.id).toBe(expectedGenre.id);
     expect(genre.name).toBe(expectedGenre.name);
   });
+
+  it("can get courses by genre", async () => {
+    const query = {
+      query: `query Query {
+        genre(id: "1") {
+          id
+          name
+          courses {
+            id
+            name
+            description
+            price
+            isDiscounted
+          }
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const genre = data.genre;
+    const expectedGenre = allGenres[0];
+
+    expect(genre.id).toBe(expectedGenre.id);
+    expect(genre.name).toBe(expectedGenre.name);
+
+    const courses = genre.courses;
+    expect(courses.length).toBe(3);
+
+    courses.forEach((course: any, index: number) => {
+      const expectedCourse = allCourses[index];
+      expect(course.id).toBe(expectedCourse.id);
+      expect(course.name).toBe(expectedCourse.name);
+      expect(course.description).toBe(expectedCourse.description);
+      expect(course.price).toBe(expectedCourse.price);
+      expect(course.isDiscounted).toBe(expectedCourse.isDiscounted);
+    });
+  });
 });
