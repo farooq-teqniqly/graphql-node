@@ -5,6 +5,10 @@ const resolvers = {
     courses: () => {
       return allCourses;
     },
+    course: (_: any, args: { id: any }, __: any) => {
+      const id = args.id;
+      return allCourses.find((course) => course.id === id);
+    },
   },
 };
 

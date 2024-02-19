@@ -1,6 +1,7 @@
 const typeDefs = `
     type Query {
         courses: [Course!]!
+        course(id: String!): Course
     }
 
     type Course {

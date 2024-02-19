@@ -3,23 +3,16 @@ import { createApolloServer } from "./server";
 import request from "supertest";
 import allCourses from "./data/courses";
 
-const queryData = {
-  query: `query Query {
-    courses {
-      id
-      name
-      description
-      price
-    }
-  }`,
+type Query = {
+  query: string;
 };
 
 describe("courses api", () => {
   let server: ApolloServer;
   let url: string;
 
-  const executeQuery = async () => {
-    const response = await request(url).post("/").send(queryData);
+  const executeQuery = async (query: Query) => {
+    const response = await request(url).post("/").send(query);
     expect(response.error).toBe(false);
     return response.body.data;
   };
@@ -32,8 +25,19 @@ describe("courses api", () => {
     await server?.stop();
   });
 
-  it("returns all courses", async () => {
-    const data = await executeQuery();
+  it("can query all courses", async () => {
+    const query = {
+      query: `query Query {
+        courses {
+          id
+          name
+          description
+          price
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
     const courses = data.courses;
     expect(courses.length).toBe(3);
 
@@ -44,5 +48,27 @@ describe("courses api", () => {
       expect(course.description).toBe(expectedCourse.description);
       expect(course.price).toBe(expectedCourse.price);
     });
+  });
+
+  it("can query a single course", async () => {
+    const query = {
+      query: `query Query {
+        course(id: "3") {
+          id
+          name
+          description
+          price
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const course = data.course;
+    const expectedCourse = allCourses[2];
+
+    expect(course.id).toBe(expectedCourse.id);
+    expect(course.name).toBe(expectedCourse.name);
+    expect(course.description).toBe(expectedCourse.description);
+    expect(course.price).toBe(expectedCourse.price);
   });
 });
