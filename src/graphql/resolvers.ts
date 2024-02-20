@@ -25,8 +25,18 @@ const resolvers = {
     },
   },
   Genre: {
-    courses: (parent: { id: string }, _: any, context: any) => {
+    courses: (parent: { id: string }, args: any, context: any) => {
       const genreId = parent.id;
+      const { filter } = args;
+
+      if (filter) {
+        return context.allCourses.filter(
+          (course: Course) =>
+            course.genreId === genreId &&
+            course.isDiscounted === filter.isDiscounted
+        );
+      }
+
       return context.allCourses.filter(
         (course: Course) => course.genreId === genreId
       );

@@ -225,4 +225,40 @@ describe("courses api", () => {
       expect(course.isDiscounted).toBe(expectedCourse.isDiscounted);
     });
   });
+
+  it("can get discounted courses for a genre", async () => {
+    const query = {
+      query: `query Query {
+        genre(id: "1") {
+          courses(filter: { isDiscounted: true }) {
+            isDiscounted
+          }
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const courses = data.genre.courses;
+    expect(courses.length).toBe(1);
+    expect(courses[0].isDiscounted).toBe(true);
+  });
+
+  it("can get non-discounted courses for a genre", async () => {
+    const query = {
+      query: `query Query {
+        genre(id: "1") {
+          courses(filter: { isDiscounted: false }) {
+            isDiscounted
+          }
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const courses = data.genre.courses;
+    expect(courses.length).toBe(2);
+    courses.forEach((course: any) => {
+      expect(course.isDiscounted).toBe(false);
+    });
+  });
 });

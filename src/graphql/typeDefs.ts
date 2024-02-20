@@ -23,7 +23,7 @@ const typeDefs = `
     type Genre {
         id: ID!
         name: String!
-        courses: [Course!]!
+        courses(filter: CoursesFilter): [Course!]!
     }
 
     type Review{
