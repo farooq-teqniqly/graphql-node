@@ -72,6 +72,51 @@ describe("courses api", () => {
     expect(course.price).toBe(expectedCourse.price);
   });
 
+  it("can get a course's genre", async () => {
+    const query = {
+      query: `query Query {
+        course(id: "1") {
+          genre {
+            name
+          }
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const course = data.course;
+
+    const genre = course.genre;
+    const expectedGenre = allGenres[0];
+
+    expect(genre.name).toBe(expectedGenre.name);
+  });
+
+  it("can get a course's reviews", async () => {
+    const query = {
+      query: `query Query {
+        course(id: "1") {
+          reviews {
+            rating
+            title
+            comment
+          }
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const course = data.course;
+
+    const reviews = course.reviews;
+    expect(reviews.length).toBe(1);
+
+    const review = reviews[0];
+    expect(review.rating).toBe(5);
+    expect(review.title).toBe("Great course");
+    expect(review.comment).toBe("I really enjoyed this course");
+  });
+
   it("can query by genre", async () => {
     const query = {
       query: `query Query {

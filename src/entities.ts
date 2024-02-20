@@ -12,4 +12,12 @@ type Course = {
   genreId: string;
 };
 
-export { Course, Genre };
+type Review = {
+  id: string;
+  courseId: string;
+  rating: number;
+  title: string;
+  comment: string;
+};
+
+export { Course, Genre, Review };

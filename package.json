@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "ts": "ts-node index.ts",
+    "dev": "nodemon --exec ts-node index.ts",
     "test": "npx jest --watch"
   },
   "keywords": [],

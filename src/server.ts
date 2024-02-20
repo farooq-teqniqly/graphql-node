@@ -3,7 +3,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import type { ListenOptions } from "net";
 import resolvers from "./graphql/resolvers";
 import typeDefs from "./graphql/typeDefs";
-import { allCourses, allGenres } from "./data/courses";
+import { allCourses, allGenres, allReviews } from "./data/courses";
 
 const createApolloServer = async (
   listenOptions: ListenOptions = { port: 4000 }
@@ -15,7 +15,7 @@ const createApolloServer = async (
 
   const { url } = await startStandaloneServer(server, {
     listen: listenOptions,
-    context: async () => ({ allCourses, allGenres }),
+    context: async () => ({ allCourses, allGenres, allReviews }),
   });
 
   return { server, url };

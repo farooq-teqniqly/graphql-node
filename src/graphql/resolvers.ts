@@ -21,6 +21,18 @@ const resolvers = {
       );
     },
   },
+  Course: {
+    genre: (parent: { genreId: string }, _: any, context: any) => {
+      const genreId = parent.genreId;
+      return context.allGenres.find((genre: Genre) => genre.id === genreId);
+    },
+    reviews: (parent: { id: string }, _: any, context: any) => {
+      const courseId = parent.id;
+      return context.allReviews.filter(
+        (review: { courseId: string }) => review.courseId === courseId
+      );
+    },
+  },
 };
 
 export default resolvers;

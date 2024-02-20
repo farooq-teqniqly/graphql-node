@@ -1,4 +1,4 @@
-import { Course, Genre } from "../entities";
+import { Course, Genre, Review } from "../entities";
 
 const allGenres: Genre[] = [
   {
@@ -42,4 +42,42 @@ const allCourses: Course[] = [
   },
 ];
 
-export { allCourses, allGenres };
+const allReviews: Review[] = [
+  {
+    id: "1",
+    courseId: "1",
+    rating: 5,
+    title: "Great course",
+    comment: "I really enjoyed this course",
+  },
+  {
+    id: "3",
+    courseId: "2",
+    rating: 4,
+    title: "Great course",
+    comment: "I really enjoyed this course",
+  },
+  {
+    id: "4",
+    courseId: "2",
+    rating: 2,
+    title: "Not worth the money",
+    comment: "I didn't learn much in this course",
+  },
+  {
+    id: "5",
+    courseId: "3",
+    rating: 5,
+    title: "Great course",
+    comment: "I really enjoyed this course",
+  },
+  {
+    id: "6",
+    courseId: "3",
+    rating: 4,
+    title: "Good course",
+    comment: "I learned a lot in this course",
+  },
+];
+
+export { allCourses, allGenres, allReviews };
