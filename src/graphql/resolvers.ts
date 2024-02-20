@@ -2,7 +2,18 @@ import { Course, Genre } from "../entities";
 
 const resolvers = {
   Query: {
-    courses: (_: any, __: any, context: any) => context.allCourses,
+    courses: (_: any, args: any, context: any) => {
+      let filteredCourses = context.allCourses;
+      const { filter } = args;
+
+      if (filter) {
+        filteredCourses = filteredCourses.filter(
+          (course: Course) => course.isDiscounted === filter.isDiscounted
+        );
+      }
+
+      return filteredCourses;
+    },
     course: (_: any, args: { id: any }, context: any) => {
       const id = args.id;
       return context.allCourses.find((course: Course) => course.id === id);

@@ -1,9 +1,13 @@
 const typeDefs = `
     type Query {
-        courses: [Course!]!
+        courses(filter: CoursesFilter): [Course!]!
         course(id: ID!): Course
         genres: [Genre!]!
         genre(id: String!): Genre
+    }
+
+    input CoursesFilter {
+        isDiscounted: Boolean
     }
 
     type Course {

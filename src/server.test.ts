@@ -50,6 +50,39 @@ describe("courses api", () => {
     });
   });
 
+  it("returns discounted courses", async () => {
+    const query = {
+      query: `query Query {
+        courses(filter: { isDiscounted: true }) {
+          isDiscounted
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const courses = data.courses;
+    expect(courses.length).toBe(1);
+    expect(courses[0].isDiscounted).toBe(true);
+  });
+
+  it("returns non-discounted courses", async () => {
+    const query = {
+      query: `query Query {
+        courses(filter: { isDiscounted: false }) {
+          isDiscounted
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const courses = data.courses;
+    expect(courses.length).toBe(2);
+
+    courses.forEach((course: any) => {
+      expect(course.isDiscounted).toBe(false);
+    });
+  });
+
   it("can query a single course", async () => {
     const query = {
       query: `query Query {
