@@ -6,13 +6,13 @@ const resolvers = {
       let filteredCourses = context.allCourses;
       const { filter } = args;
 
-      if (filter) {
-        filteredCourses = filteredCourses.filter(
-          (course: Course) => course.isDiscounted === filter.isDiscounted
-        );
+      if (!filter) {
+        return filteredCourses;
       }
 
-      return filteredCourses;
+      return filteredCourses.filter(
+        (course: Course) => course.isDiscounted === filter.isDiscounted
+      );
     },
     course: (_: any, args: { id: any }, context: any) => {
       const id = args.id;
@@ -29,16 +29,18 @@ const resolvers = {
       const genreId = parent.id;
       const { filter } = args;
 
-      if (filter) {
-        return context.allCourses.filter(
-          (course: Course) =>
-            course.genreId === genreId &&
-            course.isDiscounted === filter.isDiscounted
-        );
+      const coursesForGenre = context.allCourses.filter(
+        (course: Course) => course.genreId === genreId
+      );
+
+      if (!filter) {
+        return coursesForGenre;
       }
 
-      return context.allCourses.filter(
-        (course: Course) => course.genreId === genreId
+      return coursesForGenre.filter(
+        (course: Course) =>
+          course.genreId === genreId &&
+          course.isDiscounted === filter.isDiscounted
       );
     },
   },
