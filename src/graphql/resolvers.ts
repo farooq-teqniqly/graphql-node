@@ -1,5 +1,9 @@
 import { Course, Genre } from "../entities";
 
+const filterCoursesByDiscount = (courses: Course[], isDiscounted: boolean) => {
+  return courses.filter((course) => course.isDiscounted === isDiscounted);
+};
+
 const resolvers = {
   Query: {
     courses: (_: any, args: any, context: any) => {
@@ -10,9 +14,7 @@ const resolvers = {
         return filteredCourses;
       }
 
-      return filteredCourses.filter(
-        (course: Course) => course.isDiscounted === filter.isDiscounted
-      );
+      return filterCoursesByDiscount(filteredCourses, filter.isDiscounted);
     },
     course: (_: any, args: { id: any }, context: any) => {
       const id = args.id;
@@ -37,11 +39,7 @@ const resolvers = {
         return coursesForGenre;
       }
 
-      return coursesForGenre.filter(
-        (course: Course) =>
-          course.genreId === genreId &&
-          course.isDiscounted === filter.isDiscounted
-      );
+      return filterCoursesByDiscount(coursesForGenre, filter.isDiscounted);
     },
   },
   Course: {
