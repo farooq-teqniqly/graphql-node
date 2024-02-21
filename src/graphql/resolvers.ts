@@ -1,7 +1,26 @@
+import { allCourses, allReviews } from "../data/courses";
 import { Course, Genre } from "../entities";
 
 const filterCoursesByDiscount = (courses: Course[], isDiscounted: boolean) => {
   return courses.filter((course) => course.isDiscounted === isDiscounted);
+};
+
+const getCoursesByAverageRating = (minRatingInclusive: number): Course[] => {
+  const courses: Course[] = [];
+
+  allCourses.forEach((course: Course) => {
+    const reviews = allReviews.filter(
+      (review) => review.courseId === course.id
+    );
+    const averageRating =
+      reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+
+    if (averageRating >= minRatingInclusive) {
+      courses.push(course);
+    }
+  });
+
+  return courses;
 };
 
 const resolvers = {
@@ -14,7 +33,26 @@ const resolvers = {
         return filteredCourses;
       }
 
-      return filterCoursesByDiscount(filteredCourses, filter.isDiscounted);
+      if (filter.isDiscounted !== undefined) {
+        filteredCourses = filterCoursesByDiscount(
+          filteredCourses,
+          filter.isDiscounted
+        );
+      }
+
+      let coursesWithMinRating: Course[] = [];
+
+      if (filter.rating !== undefined) {
+        coursesWithMinRating = getCoursesByAverageRating(
+          Math.floor(filter.rating)
+        );
+
+        filteredCourses = filteredCourses.filter((course: Course) => {
+          return coursesWithMinRating.some((c) => c.id === course.id);
+        });
+      }
+
+      return filteredCourses;
     },
     course: (_: any, args: { id: any }, context: any) => {
       const id = args.id;

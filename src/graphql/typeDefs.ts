@@ -8,6 +8,7 @@ const typeDefs = `
 
     input CoursesFilter {
         isDiscounted: Boolean
+        rating: Int
     }
 
     type Course {

@@ -2,6 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { createApolloServer } from "./server";
 import request from "supertest";
 import { allCourses, allGenres } from "./data/courses";
+import { Course } from "./entities";
 
 type Query = {
   query: string;
@@ -260,5 +261,19 @@ describe("courses api", () => {
     courses.forEach((course: any) => {
       expect(course.isDiscounted).toBe(false);
     });
+  });
+
+  it("returns courses with a rating of 4 or higher", async () => {
+    const query = {
+      query: `query Query {
+        courses(filter: { rating: 4 }) {
+          id
+        }
+      }`,
+    };
+
+    const data = await executeQuery(query);
+    const ids = data.courses.map((course: Course) => parseInt(course.id));
+    expect(ids).toEqual([1, 3]);
   });
 });
